@@ -10,18 +10,29 @@ size_t p = 0;
 
 
 size_t findMatchingBracket(string& input, size_t index){
-  char open = input[index];
-  char close = (open == '[') ? ']' : '[';
-  int balance = 1;
-  int step = (open == '[') ? 1 : -1;
+    int balance = 1;
+    if (input[index] == '['){
+        for(size_t i = index + 1; i < input.size(); ++i){
+            if(input[i] == '[')
+                ++balance;
+            if(input[i] == ']')
+                --balance;
+            if(balance == 0)
+                return i;
+        }
+    }
 
-  for (int i = static_cast<int>(index) + step; i >= 0 && i < static_cast<int>(input.size()); i += step){ //init
-    if(input[i] == open) balance++;
-    else if( input[i] == close) balance--;
-    if (balance == 0) return static_cast<size_t>(i);
-  }
-  
- throw std::runtime_error("Unmatched bracket at position " + std::to_string(index));
+    else if(input[index] == ']'){
+        for(size_t i = index - 1; i >= 0; --i){
+            if(input[i] == ']')
+              ++balance;
+            if(input[i] == '[')
+              --balance;
+            if(balance == 0)
+              return i;
+        }
+    }
+    throw std::runtime_error("Unmatched bracket at position " + std::to_string(index));
 }
 
 
@@ -61,33 +72,26 @@ void instructions(string& input){
         break;
 
       case ',':
-        cell[p] = cin.get();
+        cout << "Input something for the cell: ";
+        cin >> cell[p];
         break;
 
       case '[':
-        if(cell[p] == 0){
-          i = findMatchingBracket(input, i);
-        }
-        else {
-          loopStack.push_back(i);
-        }
-        break;
+          if (cell[p] == 0) 
+              i = findMatchingBracket(input, i);
+          break;
 
       case ']':
-        if(cell[p] != 0){
-          i = loopStack.back();
-          }
-        else {
-          loopStack.pop_back();
-        }
-        break;
+          if (cell[p] != 0) 
+              i = findMatchingBracket(input, i);
+          break;
 		}
 	}
 }
 
 int main(){
   string input;
-  cout << "Enter Brainfuck code: ";
+  cout << "Enter Brainfuck input: ";
   getline(cin, input);
   instructions(input);
   cout << endl;
