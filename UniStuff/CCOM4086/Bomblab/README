@@ -1,0 +1,15 @@
+This is bomb 22.
+
+It belongs to 801195597 (yadiel.mercado1@upr.edu)
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-= ANSWERS =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+1. "There are rumors on the internets."
+2. "1 2 4 8 16 32"
+3. "4 0"
+4. "5 15 DrEvil" (Unlocks Secret Phase)
+5. "5 115"
+6. "3 4 2 1 5 6"
+
+SECRET PHASE
+"7" - Makes the tree traverse to node value of 6 and returns 4
+which defuses the bomb.
