@@ -6,19 +6,14 @@
 
 // Helper function whose task is to verify each row of our difference table for repeated numbers.
 int duplicateCheck(int* row, int size){
-    int check[size]; //New array initialized to 0 to help represent unseen/seen numbers in the given row.
-    memset(check, 0, sizeof(check)); //Sets all the elements of check to 0 (unseen) by default.
-
-    //Main loop that iterates over the table row checking if the number has or hasn't been seen yet.
     for(int i = 0; i < size; i++){
-        if(check[row[i]]){ //It verifies if the number has been seen before, and returns 1 if it has.
-            return 1;
+        for(int j = i + 1; j < size; j++){
+            if(row[i] == row[j]){
+                return 1;
+            }
         }
-        
-        check[row[i]] = 1; //Since it hasn't seen this number before, it now sets it to 1 in the check array
-                          //making it so that it was JUST now seen.
     }
-    return 0; //Returns 0 if all the numbers in the row were all unique numbers.
+    return 0;
 }
 
 // Helper function whose task is to print out the difference table to the user.
@@ -34,7 +29,7 @@ int printDTable(int diffTable[SIZE - 1][SIZE - 1]){
 
 
 int main(){
-    int inputArr[SIZE] = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3}; // Hard coded input array
+    int inputArr[SIZE] = {1, 3, 2, 5, 6, 1, 1, 6, 10, 3}; // Hard coded input array
     int diffTable[SIZE - 1][SIZE - 1]; // Defining a difference table we will use.
     int isCostas = 1; // Fake boolean to know if our array ends up being Costas
 
@@ -46,11 +41,11 @@ int main(){
       }
     }
 
- /*
+ 
   //PRINT BLOCK (Commented out for assembly purposes)
    //Prints out the original array for user to see:
     printf("Original array = {"); 
-    for(int i = 0; i < SIZE - 1; i++){
+    for(int i = 0; i < SIZE; i++){
         printf("%d ", inputArr[i]);
     }
     printf("}\n");
@@ -59,14 +54,13 @@ int main(){
     printf("Difference Table\nT = {\n");
     printDTable(diffTable); //Calls helper function printDTable to access and print the difference table
     printf("}\n");
-*/
 
 //  This block checks if the array is a Costas array by checking if there exists a duplicate number
 //  in each row of the difference table generated using the input array.
     for(int i = 0; i < SIZE - 1; i++){
         //We will call helper function duplicateCheck to help us verify if there exists a duplicated number 
         //within the same row of our difference table, thus making it NOT a costas array.
-        if(duplicateCheck(diffTable[i], SIZE - 1)){
+        if(duplicateCheck(diffTable[i], SIZE - 1 - i)){
             isCostas = 0;
             break;
         }
